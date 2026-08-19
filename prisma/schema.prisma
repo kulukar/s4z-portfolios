@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id   String @id @default(cuid())
+  slug String @unique
+
+  number      String
+  title       String
+  category    String
+  description String  @db.Text
+  coverImage  String?
+
+  role     String?
+  context  String?
+  platform String?
+  year     String?
+  readTime String?
+
+  featured  Boolean @default(false)
+  published Boolean @default(false)
+  order     Int     @default(0)
+
+  hero         Json?
+  overview     Json?
+  problemGoals Json?
+  process      Json?
+  solution     Json?
+  design       Json?
+  outcome      Json?
+
+  tags   ProjectTag[]
+  images ProjectImage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published])
+  @@index([featured])
+  @@index([order])
+}
+
+model ProjectTag {
+  id    String @id @default(cuid())
+  name  String
+  order Int    @default(0)
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model ProjectImage {
+  id String @id @default(cuid())
+
+  url     String
+  alt     String?
+  caption String?
+  type    String?
+  order   Int     @default(0)
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+}
