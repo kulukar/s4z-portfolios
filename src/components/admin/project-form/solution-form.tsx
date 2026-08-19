@@ -306,10 +306,6 @@ export function SolutionForm({
         </div>
       </FormSection>
 
-      {/* ==================================================
-          MONITORING
-      ================================================== */}
-
       <FormSection
         number="04"
         title="Monitoring"
@@ -358,11 +354,16 @@ export function SolutionForm({
 
         <div className="grid gap-5 md:grid-cols-2">
           <Field>
-            <Label>Image</Label>
-
-            <Input
-              {...register("solution.monitoring.image")}
-              placeholder="/images/projects/project/monitoring.jpg"
+            <ImageUpload
+              label="Monitoring Image"
+              description="Upload the monitoring interface used in the case study."
+              value={watch("solution.monitoring.image")}
+              onChange={(url) =>
+                setValue("solution.monitoring.image", url, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
+              }
             />
 
             <ErrorMessage
@@ -397,10 +398,6 @@ export function SolutionForm({
           />
         </Field>
       </FormSection>
-
-      {/* ==================================================
-          DATA VISUALIZATION
-      ================================================== */}
 
       <FormSection
         number="05"
@@ -452,11 +449,16 @@ export function SolutionForm({
 
         <div className="grid gap-5 md:grid-cols-2">
           <Field>
-            <Label>Image</Label>
-
-            <Input
-              {...register("solution.dataVisualization.image")}
-              placeholder="/images/projects/project/data-visualization.jpg"
+            <ImageUpload
+              label="Data Visualization Image"
+              description="Upload the interface showing charts, metrics, or other data visualization."
+              value={watch("solution.dataVisualization.image")}
+              onChange={(url) =>
+                setValue("solution.dataVisualization.image", url, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
+              }
             />
 
             <ErrorMessage
@@ -533,11 +535,16 @@ export function SolutionForm({
 
         <div className="grid gap-5 md:grid-cols-2">
           <Field>
-            <Label>Primary Image</Label>
-
-            <Input
-              {...register("solution.interfaceDetails.primaryImage")}
-              placeholder="/images/projects/project/detail-primary.jpg"
+            <ImageUpload
+              label="Primary Image"
+              description="Upload the primary supporting interface detail."
+              value={watch("solution.interfaceDetails.primaryImage")}
+              onChange={(url) =>
+                setValue("solution.interfaceDetails.primaryImage", url, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
+              }
             />
 
             <ErrorMessage
@@ -563,11 +570,16 @@ export function SolutionForm({
 
         <div className="grid gap-5 md:grid-cols-2">
           <Field>
-            <Label>Secondary Image</Label>
-
-            <Input
-              {...register("solution.interfaceDetails.secondaryImage")}
-              placeholder="/images/projects/project/detail-secondary.jpg"
+            <ImageUpload
+              label="Secondary Image"
+              description="Upload the secondary supporting interface detail."
+              value={watch("solution.interfaceDetails.secondaryImage")}
+              onChange={(url) =>
+                setValue("solution.interfaceDetails.secondaryImage", url, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
+              }
             />
 
             <ErrorMessage

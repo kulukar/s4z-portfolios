@@ -5,17 +5,18 @@ import type {
   FieldErrors,
   UseFormRegister,
   UseFormRegisterReturn,
+  UseFormSetValue,
+  UseFormWatch,
 } from "react-hook-form";
 
 import type { ProjectSchema } from "@/src/schemas/project.schema";
-
-/* ======================================================
-   TYPES
-====================================================== */
+import { ImageUpload } from "@/src/components/admin/image-upload";
 
 type BasicInfoFormProps = {
   register: UseFormRegister<ProjectSchema>;
   errors: FieldErrors<ProjectSchema>;
+  watch: UseFormWatch<ProjectSchema>;
+  setValue: UseFormSetValue<ProjectSchema>;
 };
 
 type FieldProps = {
@@ -31,19 +32,16 @@ type CheckboxFieldProps = {
   registration: UseFormRegisterReturn;
 };
 
-/* ======================================================
-   COMPONENT
-====================================================== */
-
-export function BasicInfoForm({ register, errors }: BasicInfoFormProps) {
+export function BasicInfoForm({
+  register,
+  errors,
+  watch,
+  setValue,
+}: BasicInfoFormProps) {
   const basicErrors = errors.basic;
 
   return (
     <div className="space-y-8">
-      {/* ==================================================
-          NUMBER + ORDER
-      ================================================== */}
-
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label="Project Number"
@@ -176,26 +174,26 @@ export function BasicInfoForm({ register, errors }: BasicInfoFormProps) {
         />
       </Field>
 
-      {/* ==================================================
-          COVER IMAGE
-      ================================================== */}
-
-      <Field
-        label="Cover Image"
-        description="For now, enter an image path from the /public directory."
-        error={basicErrors?.coverImage?.message}
-      >
-        <input
-          {...register("basic.coverImage")}
-          type="text"
-          placeholder="/images/projects/ground-detector/hero.jpg"
-          className={inputClassName}
+      <div>
+        <ImageUpload
+          label="Cover / Hero Image"
+          description="Main image used for the project cover and case study hero. JPG, PNG or WebP. Maximum 10 MB."
+          value={watch("basic.coverImage")}
+          onChange={(url) =>
+            setValue("basic.coverImage", url, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
+          aspect="video"
         />
-      </Field>
 
-      {/* ==================================================
-          ROLE + CONTEXT
-      ================================================== */}
+        {basicErrors?.coverImage?.message && (
+          <p className="mt-2 text-xs text-red-400">
+            {basicErrors.coverImage.message}
+          </p>
+        )}
+      </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field

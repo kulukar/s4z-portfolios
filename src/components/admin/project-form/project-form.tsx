@@ -7,13 +7,13 @@ import { Check, Loader2, Save } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import { updateProject } from "@/src/lib/actions/project";
-
 import {
   projectSchema,
   type ProjectSchema,
 } from "@/src/schemas/project.schema";
-import { BasicInfoForm } from "@/src/components/admin/project-form/basic-info-form";
-import { HeroForm } from "@/src/components/admin/project-form/hero-form";
+
+import { BasicInfoForm } from "./basic-info-form";
+import { HeroForm } from "./hero-form";
 import { OverviewForm } from "./overview-form";
 import { ProblemGoalsForm } from "./problem-goals-form";
 import { ProcessForm } from "./process-form";
@@ -31,34 +31,23 @@ type SectionHeaderProps = {
   description: string;
 };
 
-type EditorPlaceholderProps = {
-  id: string;
-  number: string;
-  title: string;
-  description: string;
-};
-
 export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
   const router = useRouter();
 
   const [message, setMessage] = useState<string | null>(null);
-
   const [success, setSuccess] = useState(false);
-
-  const form = useForm<ProjectSchema>({
-    resolver: zodResolver(projectSchema),
-    defaultValues,
-  });
 
   const {
     register,
     handleSubmit,
-    reset,
     watch,
     setValue,
-
+    reset,
     formState: { errors, isSubmitting, isDirty },
-  } = form;
+  } = useForm<ProjectSchema>({
+    resolver: zodResolver(projectSchema),
+    defaultValues,
+  });
 
   async function onSubmit(values: ProjectSchema) {
     setMessage(null);
@@ -69,12 +58,10 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
 
       if (!result.success) {
         setMessage(result.message ?? "Failed to update project.");
-
         return;
       }
 
       setSuccess(true);
-
       setMessage(result.message ?? "Project updated successfully.");
 
       reset(values);
@@ -84,7 +71,6 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
       console.error(error);
 
       setSuccess(false);
-
       setMessage("Something went wrong while updating the project.");
     }
   }
@@ -98,32 +84,27 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           description="General project information used across the portfolio."
         />
 
-        <div
-          className="
-            mt-6
-            border
-            border-white/10
-            bg-white/1
-            p-5
-
-            sm:p-6
-          "
-        >
-          <BasicInfoForm register={register} errors={errors} />
+        <div className="mt-6 border border-white/10 bg-white/1 p-5 sm:p-6">
+          <BasicInfoForm
+            register={register}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
+          />
         </div>
       </section>
 
       <section
         id="hero"
         className="
-    mt-12
-    scroll-mt-28
-    border-t
-    border-white/10
-    pt-10
+          mt-12
+          scroll-mt-28
+          border-t
+          border-white/10
+          pt-10
 
-    sm:mt-14
-  "
+          sm:mt-14
+        "
       >
         <SectionHeader
           number="02"
@@ -131,17 +112,7 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           description="Project introduction, headline, and supporting description."
         />
 
-        <div
-          className="
-      mt-6
-      border
-      border-white/10
-      bg-white/1
-      p-5
-
-      sm:p-6
-    "
-        >
+        <div className="mt-6 border border-white/10 bg-white/1 p-5 sm:p-6">
           <HeroForm register={register} errors={errors} />
         </div>
       </section>
@@ -149,14 +120,14 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
       <section
         id="overview"
         className="
-    mt-12
-    scroll-mt-28
-    border-t
-    border-white/10
-    pt-10
+          mt-12
+          scroll-mt-28
+          border-t
+          border-white/10
+          pt-10
 
-    sm:mt-14
-  "
+          sm:mt-14
+        "
       >
         <SectionHeader
           number="03"
@@ -164,17 +135,7 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           description="Project story, tools, role, and contribution."
         />
 
-        <div
-          className="
-      mt-6
-      border
-      border-white/10
-      bg-white/1
-      p-5
-
-      sm:p-6
-    "
-        >
+        <div className="mt-6 border border-white/10 bg-white/1 p-5 sm:p-6">
           <OverviewForm
             register={register}
             errors={errors}
@@ -187,14 +148,14 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
       <section
         id="problem-goals"
         className="
-    mt-12
-    scroll-mt-28
-    border-t
-    border-white/10
-    pt-10
+          mt-12
+          scroll-mt-28
+          border-t
+          border-white/10
+          pt-10
 
-    sm:mt-14
-  "
+          sm:mt-14
+        "
       >
         <SectionHeader
           number="04"
@@ -202,17 +163,7 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           description="Challenges, project goals, and design principles."
         />
 
-        <div
-          className="
-      mt-6
-      border
-      border-white/10
-      bg-white/1
-      p-5
-
-      sm:p-6
-    "
-        >
+        <div className="mt-6 border border-white/10 bg-white/1 p-5 sm:p-6">
           <ProblemGoalsForm
             register={register}
             errors={errors}
@@ -225,14 +176,14 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
       <section
         id="process"
         className="
-    mt-12
-    scroll-mt-28
-    border-t
-    border-white/10
-    pt-10
+          mt-12
+          scroll-mt-28
+          border-t
+          border-white/10
+          pt-10
 
-    sm:mt-14
-  "
+          sm:mt-14
+        "
       >
         <SectionHeader
           number="05"
@@ -240,17 +191,7 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           description="Information structure, exploration, and refinement."
         />
 
-        <div
-          className="
-      mt-6
-      border
-      border-white/10
-      bg-white/1
-      p-5
-
-      sm:p-6
-    "
-        >
+        <div className="mt-6 border border-white/10 bg-white/1 p-5 sm:p-6">
           <ProcessForm
             register={register}
             errors={errors}
@@ -263,14 +204,14 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
       <section
         id="solution"
         className="
-    mt-12
-    scroll-mt-28
-    border-t
-    border-white/10
-    pt-10
+          mt-12
+          scroll-mt-28
+          border-t
+          border-white/10
+          pt-10
 
-    sm:mt-14
-  "
+          sm:mt-14
+        "
       >
         <SectionHeader
           number="06"
@@ -278,17 +219,7 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           description="Final interface, design details, and visualization."
         />
 
-        <div
-          className="
-      mt-6
-      border
-      border-white/10
-      bg-white/1
-      p-5
-
-      sm:p-6
-    "
-        >
+        <div className="mt-6 border border-white/10 bg-white/1 p-5 sm:p-6">
           <SolutionForm
             register={register}
             errors={errors}
@@ -298,17 +229,21 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
         </div>
       </section>
 
+      {/* ==================================================
+          07 — OUTCOME
+      ================================================== */}
+
       <section
         id="outcome"
         className="
-    mt-12
-    scroll-mt-28
-    border-t
-    border-white/10
-    pt-10
+          mt-12
+          scroll-mt-28
+          border-t
+          border-white/10
+          pt-10
 
-    sm:mt-14
-  "
+          sm:mt-14
+        "
       >
         <SectionHeader
           number="07"
@@ -316,17 +251,7 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           description="Project outcome, lessons, and final reflection."
         />
 
-        <div
-          className="
-      mt-6
-      border
-      border-white/10
-      bg-white/1
-      p-5
-
-      sm:p-6
-    "
-        >
+        <div className="mt-6 border border-white/10 bg-white/1 p-5 sm:p-6">
           <OutcomeForm
             register={register}
             errors={errors}
@@ -335,6 +260,10 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           />
         </div>
       </section>
+
+      {/* ==================================================
+          ACTION BAR
+      ================================================== */}
 
       <div
         className="
@@ -429,36 +358,19 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
   );
 }
 
+/* ======================================================
+   SECTION HEADER
+====================================================== */
+
 function SectionHeader({ number, title, description }: SectionHeaderProps) {
   return (
-    <div
-      className="
-        border-b
-        border-white/10
-        pb-5
-      "
-    >
+    <div className="border-b border-white/10 pb-5">
       <div className="flex items-center gap-3">
-        <span
-          className="
-            font-display
-            text-xs
-            text-[#3B82F6]
-          "
-        >
-          {number}
-        </span>
+        <span className="font-display text-xs text-[#3B82F6]">{number}</span>
 
         <span className="h-px w-5 bg-white/10" />
 
-        <p
-          className="
-            text-[9px]
-            uppercase
-            tracking-[0.18em]
-            text-white/25
-          "
-        >
+        <p className="text-[9px] uppercase tracking-[0.18em] text-white/25">
           Section
         </p>
       </div>
@@ -493,61 +405,5 @@ function SectionHeader({ number, title, description }: SectionHeaderProps) {
         {description}
       </p>
     </div>
-  );
-}
-
-function EditorPlaceholder({
-  id,
-  number,
-  title,
-  description,
-}: EditorPlaceholderProps) {
-  return (
-    <section
-      id={id}
-      className="
-        mt-12
-        scroll-mt-28
-        border-t
-        border-white/10
-        pt-10
-
-        sm:mt-14
-      "
-    >
-      <SectionHeader number={number} title={title} description={description} />
-
-      <div
-        className="
-          mt-6
-
-          flex
-          min-h-36
-          items-center
-          justify-center
-
-          border
-          border-dashed
-          border-white/10
-
-          px-6
-          text-center
-        "
-      >
-        <div>
-          <p className="text-xs text-white/30">Editor coming next.</p>
-
-          <p
-            className="
-              mt-1
-              text-[10px]
-              text-white/15
-            "
-          >
-            Data already exists in the project database.
-          </p>
-        </div>
-      </div>
-    </section>
   );
 }

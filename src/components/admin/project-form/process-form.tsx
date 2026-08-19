@@ -10,6 +10,7 @@ import type {
 } from "react-hook-form";
 
 import type { ProjectSchema } from "@/src/schemas/project.schema";
+import { ImageUpload } from "@/src/components/admin/image-upload";
 
 type ProcessFormProps = {
   register: UseFormRegister<ProjectSchema>;
@@ -500,16 +501,25 @@ export function ProcessForm({
             description="Early structure image displayed in the case study."
           >
             <div className="grid gap-5">
-              <Field
-                label="Image Path"
-                error={errors.process?.structure?.image?.message}
-              >
-                <input
-                  {...register("process.structure.image")}
-                  placeholder="/images/projects/project/wireframe.jpg"
-                  className={inputClass}
+              <div>
+                <ImageUpload
+                  label="Wireframe Image"
+                  description="Upload the early structure or wireframe used in the case study."
+                  value={watch("process.structure.image")}
+                  onChange={(url) =>
+                    setValue("process.structure.image", url, {
+                      shouldDirty: true,
+                      shouldValidate: true,
+                    })
+                  }
                 />
-              </Field>
+
+                {errors.process?.structure?.image?.message && (
+                  <p className="mt-2 text-[10px] text-red-400">
+                    {errors.process.structure.image.message}
+                  </p>
+                )}
+              </div>
 
               <Field
                 label="Image Alt"
@@ -643,21 +653,32 @@ export function ProcessForm({
             description="Images used for the wireframe-to-final comparison."
           >
             <div className="grid gap-6 sm:grid-cols-2">
+              {/* BEFORE */}
+
               <div className="space-y-5">
                 <p className="text-[9px] uppercase tracking-[0.16em] text-white/20">
                   Before
                 </p>
 
-                <Field
-                  label="Image Path"
-                  error={errors.process?.refinement?.beforeImage?.message}
-                >
-                  <input
-                    {...register("process.refinement.beforeImage")}
-                    placeholder="/images/projects/project/wireframe-detail.jpg"
-                    className={inputClass}
+                <div>
+                  <ImageUpload
+                    label="Before Image"
+                    description="Upload the interface before refinement."
+                    value={watch("process.refinement.beforeImage")}
+                    onChange={(url) =>
+                      setValue("process.refinement.beforeImage", url, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      })
+                    }
                   />
-                </Field>
+
+                  {errors.process?.refinement?.beforeImage?.message && (
+                    <p className="mt-2 text-[10px] text-red-400">
+                      {errors.process.refinement.beforeImage.message}
+                    </p>
+                  )}
+                </div>
 
                 <Field
                   label="Image Alt"
@@ -671,21 +692,32 @@ export function ProcessForm({
                 </Field>
               </div>
 
+              {/* AFTER */}
+
               <div className="space-y-5">
                 <p className="text-[9px] uppercase tracking-[0.16em] text-[#3B82F6]">
                   After
                 </p>
 
-                <Field
-                  label="Image Path"
-                  error={errors.process?.refinement?.afterImage?.message}
-                >
-                  <input
-                    {...register("process.refinement.afterImage")}
-                    placeholder="/images/projects/project/final-dashboard.jpg"
-                    className={inputClass}
+                <div>
+                  <ImageUpload
+                    label="After Image"
+                    description="Upload the final interface after refinement."
+                    value={watch("process.refinement.afterImage")}
+                    onChange={(url) =>
+                      setValue("process.refinement.afterImage", url, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      })
+                    }
                   />
-                </Field>
+
+                  {errors.process?.refinement?.afterImage?.message && (
+                    <p className="mt-2 text-[10px] text-red-400">
+                      {errors.process.refinement.afterImage.message}
+                    </p>
+                  )}
+                </div>
 
                 <Field
                   label="Image Alt"
