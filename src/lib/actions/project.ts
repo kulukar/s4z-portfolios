@@ -227,6 +227,7 @@ export async function deleteProject(id: string) {
       select: {
         id: true,
         slug: true,
+        order: true,
       },
     });
 
@@ -237,10 +238,41 @@ export async function deleteProject(id: string) {
       };
     }
 
-    await prisma.project.delete({
-      where: {
-        id,
-      },
+    await prisma.$transaction(async (tx) => {
+      await tx.project.delete({
+        where: {
+          id,
+        },
+      });
+
+      const projectsToReorder = await tx.project.findMany({
+        where: {
+          order: {
+            gt: project.order,
+          },
+        },
+
+        orderBy: {
+          order: "asc",
+        },
+
+        select: {
+          id: true,
+          order: true,
+        },
+      });
+
+      for (const item of projectsToReorder) {
+        await tx.project.update({
+          where: {
+            id: item.id,
+          },
+
+          data: {
+            order: item.order - 1,
+          },
+        });
+      }
     });
 
     revalidatePath("/");
