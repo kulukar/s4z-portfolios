@@ -14,6 +14,8 @@ import {
   getPublishedProjectCount,
 } from "@/src/lib/queries/project";
 
+export const dynamic = "force-dynamic";
+
 type CaseStudyPageProps = {
   params: Promise<{
     slug: string;

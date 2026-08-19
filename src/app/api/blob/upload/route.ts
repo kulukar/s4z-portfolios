@@ -34,7 +34,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        error: "Failed to upload image.",
+        error:
+          error instanceof Error ? error.message : "Failed to upload image.",
       },
       {
         status: 400,

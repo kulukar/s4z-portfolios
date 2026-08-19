@@ -53,9 +53,13 @@ export function ImageUpload({
 
       onChange(blob.url);
     } catch (uploadError) {
-      console.error(uploadError);
+      console.error("Blob upload error:", uploadError);
 
-      setError("Failed to upload image.");
+      setError(
+        uploadError instanceof Error
+          ? uploadError.message
+          : "Failed to upload image.",
+      );
     } finally {
       setIsUploading(false);
 
