@@ -31,6 +31,18 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     notFound();
   }
 
+  console.log("PUBLIC PROJECT SLUG:", slug);
+  console.log(
+    "PUBLIC DASHBOARD IMAGE:",
+    (
+      project.solution as {
+        dashboard?: {
+          image?: string;
+        };
+      } | null
+    )?.dashboard?.image,
+  );
+
   const [nextProjectData, totalProjects] = await Promise.all([
     getNextProject(project.order),
     getPublishedProjectCount(),
