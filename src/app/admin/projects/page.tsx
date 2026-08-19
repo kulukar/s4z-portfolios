@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { ArrowUpRight, Eye, Plus } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Plus } from "lucide-react";
 
+import { ProjectActions } from "@/src/components/admin/project/project-actions";
+import { ProjectStatusActions } from "@/src/components/admin/project/project-status-actions";
 import { getAllProjects } from "@/src/lib/queries/project";
 
 export default async function AdminProjectsPage() {
@@ -44,32 +46,46 @@ export default async function AdminProjectsPage() {
           </p>
         </div>
 
-        {/* New project kita aktifkan nanti */}
-
-        <button
-          type="button"
-          disabled
+        <Link
+          href="/admin/projects/new"
           className="
+            group
             inline-flex
             w-fit
-            cursor-not-allowed
-            items-center gap-2
+            items-center
+            gap-2
             rounded-full
-            border border-white/10
-            px-4 py-2.5
+
+            border
+            border-white/10
+
+            px-4
+            py-2.5
+
             text-[10px]
             uppercase
             tracking-[0.16em]
-            text-white/20
+            text-white/50
+
+            transition-all
+
+            hover:border-[#3B82F6]
+            hover:bg-[#3B82F6]
+            hover:text-white
           "
         >
-          <Plus size={14} />
+          <Plus
+            size={14}
+            strokeWidth={1.5}
+            className="
+              transition-transform
+              group-hover:rotate-90
+            "
+          />
           New Project
-        </button>
+        </Link>
       </div>
-      {/* ==================================================
-          PROJECT COUNT
-      ================================================== */}
+
       <div className="mt-8 flex items-center justify-between">
         <p className="text-[9px] uppercase tracking-[0.18em] text-white/25">
           All Projects
@@ -79,9 +95,7 @@ export default async function AdminProjectsPage() {
           {projects.length} {projects.length === 1 ? "project" : "projects"}
         </p>
       </div>
-      {/* ==================================================
-          PROJECT LIST
-      ================================================== */}
+
       <div className="mt-5 border-t border-white/10">
         {projects.map((project) => (
           <div
@@ -98,8 +112,6 @@ export default async function AdminProjectsPage() {
               md:py-7
             "
           >
-            {/* NUMBER */}
-
             <div className="sm:col-span-1">
               <span
                 className="
@@ -113,29 +125,44 @@ export default async function AdminProjectsPage() {
               </span>
             </div>
 
-            {/* PROJECT */}
-
             <div className="sm:col-span-4">
-              <p
-                className="
-                  font-display
-                  text-xl
-                  font-medium
-                  tracking-[-0.025em]
-                  text-white/85
+              <div className="flex flex-wrap items-center gap-2">
+                <p
+                  className="
+                    font-display
+                    text-xl
+                    font-medium
+                    tracking-tight
+                    text-white/85
 
-                  sm:text-2xl
-                "
-              >
-                {project.title}
-              </p>
+                    sm:text-2xl
+                  "
+                >
+                  {project.title}
+                </p>
+
+                {project.featured && (
+                  <span
+                    className="
+                      rounded-full
+                      border border-amber-400/20
+                      bg-amber-400/5
+                      px-2 py-1
+                      text-[8px]
+                      uppercase
+                      tracking-[0.15em]
+                      text-amber-400
+                    "
+                  >
+                    Featured
+                  </span>
+                )}
+              </div>
 
               <p className="mt-1 text-xs text-white/25">/work/{project.slug}</p>
             </div>
 
-            {/* CATEGORY */}
-
-            <div className="sm:col-span-3">
+            <div className="sm:col-span-2">
               <p
                 className="
                   max-w-xs
@@ -148,8 +175,6 @@ export default async function AdminProjectsPage() {
               </p>
             </div>
 
-            {/* ORDER */}
-
             <div className="sm:col-span-1">
               <p className="text-[9px] uppercase tracking-[0.15em] text-white/20">
                 Order
@@ -157,8 +182,6 @@ export default async function AdminProjectsPage() {
 
               <p className="mt-1 text-sm text-white/50">{project.order}</p>
             </div>
-
-            {/* STATUS */}
 
             <div className="sm:col-span-1">
               <div className="flex items-center gap-2">
@@ -184,23 +207,29 @@ export default async function AdminProjectsPage() {
               </div>
             </div>
 
-            {/* ACTIONS */}
-
             <div
               className="
-                flex items-center gap-2
+                flex flex-wrap
+                items-center
+                gap-2
 
-                sm:col-span-2
+                sm:col-span-3
                 sm:justify-end
               "
             >
-              {/* VIEW */}
+              <ProjectStatusActions
+                projectId={project.id}
+                published={project.published}
+                featured={project.featured}
+              />
 
               {project.published && (
                 <Link
                   href={`/work/${project.slug}`}
                   target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={`View ${project.title}`}
+                  title="View live project"
                   className="
                     flex h-9 w-9
                     items-center justify-center
@@ -209,15 +238,19 @@ export default async function AdminProjectsPage() {
                     text-white/30
                     transition-all
 
-                    hover:border-white/25
-                    hover:text-white
+                    hover:border-[#3B82F6]/50
+                    hover:bg-[#3B82F6]/5
+                    hover:text-[#3B82F6]
                   "
                 >
-                  <Eye size={14} strokeWidth={1.5} />
+                  <ExternalLink size={14} strokeWidth={1.5} />
                 </Link>
               )}
 
-              {/* EDIT */}
+              <ProjectActions
+                projectId={project.id}
+                projectTitle={project.title}
+              />
 
               <Link
                 href={`/admin/projects/${project.id}/edit`}
@@ -229,10 +262,12 @@ export default async function AdminProjectsPage() {
                   rounded-full
                   border border-white/10
                   px-3
+
                   text-[9px]
                   uppercase
                   tracking-[0.15em]
                   text-white/35
+
                   transition-all
 
                   hover:border-[#3B82F6]
@@ -255,9 +290,7 @@ export default async function AdminProjectsPage() {
           </div>
         ))}
       </div>
-      {/* ==================================================
-          EMPTY STATE
-      ================================================== */}
+
       {projects.length === 0 && (
         <div
           className="
@@ -280,8 +313,34 @@ export default async function AdminProjectsPage() {
           <p className="mt-2 text-sm text-white/25">
             Your portfolio projects will appear here.
           </p>
+
+          <Link
+            href="/admin/projects/new"
+            className="
+              mt-6
+              inline-flex
+              items-center
+              gap-2
+              rounded-full
+              border border-white/10
+              px-4 py-2.5
+              text-[10px]
+              uppercase
+              tracking-[0.15em]
+              text-white/40
+              transition-all
+
+              hover:border-[#3B82F6]
+              hover:bg-[#3B82F6]
+              hover:text-white
+            "
+          >
+            <Plus size={13} />
+            Create First Project
+          </Link>
         </div>
       )}
+
       <div
         className="
           mt-10

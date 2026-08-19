@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, Loader2, Save } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Check, Loader2, Plus, Save } from "lucide-react";
+import { useForm, useWatch } from "react-hook-form";
 
-import { updateProject } from "@/src/lib/actions/project";
+import { createProject, updateProject } from "@/src/lib/actions/project";
 import {
   projectSchema,
   type ProjectSchema,
@@ -21,7 +21,8 @@ import { SolutionForm } from "./solution-form";
 import { OutcomeForm } from "./outcome-from";
 
 type ProjectFormProps = {
-  projectId: string;
+  mode?: "create" | "edit";
+  projectId?: string;
   defaultValues: ProjectSchema;
 };
 
@@ -31,7 +32,11 @@ type SectionHeaderProps = {
   description: string;
 };
 
-export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
+export function ProjectForm({
+  mode = "edit",
+  projectId,
+  defaultValues,
+}: ProjectFormProps) {
   const router = useRouter();
 
   const [message, setMessage] = useState<string | null>(null);
@@ -43,17 +48,69 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
     watch,
     setValue,
     reset,
+    control,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<ProjectSchema>({
     resolver: zodResolver(projectSchema),
     defaultValues,
   });
 
+  const title = useWatch({
+    control,
+    name: "basic.title",
+  });
+
+  useEffect(() => {
+    if (mode !== "create") {
+      return;
+    }
+
+    const generatedSlug = (title ?? "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+
+    setValue("basic.slug", generatedSlug, {
+      shouldDirty: true,
+      shouldValidate: false,
+    });
+  }, [title, mode, setValue]);
+
   async function onSubmit(values: ProjectSchema) {
     setMessage(null);
     setSuccess(false);
 
     try {
+      if (mode === "create") {
+        const result = await createProject(values);
+
+        if (!result.success) {
+          setMessage(result.message ?? "Failed to create project.");
+          return;
+        }
+
+        if (!result.project) {
+          setMessage("Project created, but project data was not returned.");
+          return;
+        }
+
+        setSuccess(true);
+        setMessage(result.message ?? "Project created successfully.");
+
+        router.push(`/admin/projects/${result.project.id}/edit`);
+        router.refresh();
+
+        return;
+      }
+
+      if (!projectId) {
+        setMessage("Project ID is missing.");
+        return;
+      }
+
       const result = await updateProject(projectId, values);
 
       if (!result.success) {
@@ -71,7 +128,12 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
       console.error(error);
 
       setSuccess(false);
-      setMessage("Something went wrong while updating the project.");
+
+      setMessage(
+        mode === "create"
+          ? "Something went wrong while creating the project."
+          : "Something went wrong while updating the project.",
+      );
     }
   }
 
@@ -229,10 +291,6 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
         </div>
       </section>
 
-      {/* ==================================================
-          07 — OUTCOME
-      ================================================== */}
-
       <section
         id="outcome"
         className="
@@ -260,10 +318,6 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           />
         </div>
       </section>
-
-      {/* ==================================================
-          ACTION BAR
-      ================================================== */}
 
       <div
         className="
@@ -307,14 +361,18 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
             </div>
           ) : (
             <p className="text-xs text-white/20">
-              {isDirty ? "You have unsaved changes." : "No unsaved changes."}
+              {mode === "create"
+                ? "Create a new portfolio project."
+                : isDirty
+                  ? "You have unsaved changes."
+                  : "No unsaved changes."}
             </p>
           )}
         </div>
 
         <button
           type="submit"
-          disabled={isSubmitting || !isDirty}
+          disabled={isSubmitting || (mode === "edit" && !isDirty)}
           className="
             inline-flex
             items-center
@@ -344,7 +402,13 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
           {isSubmitting ? (
             <>
               <Loader2 size={14} className="animate-spin" />
-              Saving
+
+              {mode === "create" ? "Creating" : "Saving"}
+            </>
+          ) : mode === "create" ? (
+            <>
+              <Plus size={14} />
+              Create Project
             </>
           ) : (
             <>
@@ -357,10 +421,6 @@ export function ProjectForm({ projectId, defaultValues }: ProjectFormProps) {
     </form>
   );
 }
-
-/* ======================================================
-   SECTION HEADER
-====================================================== */
 
 function SectionHeader({ number, title, description }: SectionHeaderProps) {
   return (

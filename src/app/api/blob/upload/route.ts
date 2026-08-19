@@ -1,10 +1,24 @@
+import { requireAdmin } from "@/src/lib/auth/require-admin";
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
+import { error } from "console";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as HandleUploadBody;
-
   try {
+    await requireAdmin();
+  } catch {
+    return NextResponse.json(
+      {
+        error: "Unauthorized.",
+      },
+      {
+        status: 401,
+      },
+    );
+  }
+  try {
+    const body = (await request.json()) as HandleUploadBody;
+
     const jsonResponse = await handleUpload({
       body,
       request,

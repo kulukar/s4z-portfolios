@@ -1,5 +1,24 @@
 import { prisma } from "@/src/lib/prisma";
 
+export async function getNextProjectMeta() {
+  const lastProject = await prisma.project.findFirst({
+    orderBy: {
+      order: "desc",
+    },
+
+    select: {
+      order: true,
+    },
+  });
+
+  const order = (lastProject?.order ?? 0) + 1;
+
+  return {
+    order,
+    number: String(order).padStart(2, "0"),
+  };
+}
+
 export async function getAllProjects() {
   return prisma.project.findMany({
     orderBy: {

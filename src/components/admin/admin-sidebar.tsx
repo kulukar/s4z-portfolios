@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, FolderKanban, LayoutDashboard } from "lucide-react";
+import {
+  ArrowUpRight,
+  FolderKanban,
+  LayoutDashboard,
+  LogOut,
+} from "lucide-react";
+
+import { logoutAdmin } from "@/src/lib/actions/auth";
 
 const navigation = [
   {
@@ -32,8 +39,6 @@ export function AdminSidebar() {
         lg:flex lg:flex-col
       "
     >
-      {/* BRAND */}
-
       <div className="flex h-20 items-center border-b border-white/10 px-7">
         <Link href="/admin">
           <p className="font-display text-lg font-medium tracking-[-0.03em]">
@@ -41,8 +46,6 @@ export function AdminSidebar() {
           </p>
         </Link>
       </div>
-
-      {/* NAVIGATION */}
 
       <nav className="flex-1 px-4 py-6">
         <p className="px-3 text-[9px] uppercase tracking-[0.2em] text-white/20">
@@ -70,8 +73,8 @@ export function AdminSidebar() {
 
                   ${
                     active
-                      ? "bg-white/[0.06] text-white"
-                      : "text-white/35 hover:bg-white/[0.03] hover:text-white/70"
+                      ? "bg-white/6 text-white"
+                      : "text-white/35 hover:bg-white/3 hover:text-white/70"
                   }
                 `}
               >
@@ -88,27 +91,57 @@ export function AdminSidebar() {
         </div>
       </nav>
 
-      {/* BOTTOM */}
-
       <div className="border-t border-white/10 p-4">
-        <Link
-          href="/"
-          target="_blank"
-          className="
-            flex items-center justify-between
-            rounded-lg
-            px-3 py-2.5
-            text-xs
-            text-white/30
-            transition-colors
+        <div className="space-y-1">
+          <Link
+            href="/"
+            target="_blank"
+            className="
+              flex items-center justify-between
+              rounded-lg
+              px-3 py-2.5
+              text-xs
+              text-white/30
+              transition-colors
 
-            hover:bg-white/[0.03]
-            hover:text-white/70
-          "
-        >
-          View Portfolio
-          <ArrowUpRight size={14} />
-        </Link>
+              hover:bg-white/3
+              hover:text-white/70
+            "
+          >
+            <span>View Portfolio</span>
+
+            <ArrowUpRight size={14} />
+          </Link>
+
+          <form action={logoutAdmin}>
+            <button
+              type="submit"
+              className="
+                group
+                flex w-full
+                items-center justify-between
+                rounded-lg
+                px-3 py-2.5
+                text-xs
+                text-white/30
+                transition-colors
+
+                hover:bg-red-400/6
+                hover:text-red-400
+              "
+            >
+              <span>Logout</span>
+
+              <LogOut
+                size={14}
+                className="
+                  transition-transform
+                  group-hover:translate-x-0.5
+                "
+              />
+            </button>
+          </form>
+        </div>
       </div>
     </aside>
   );
