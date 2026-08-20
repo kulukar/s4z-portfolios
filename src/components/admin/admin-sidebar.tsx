@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   ArrowUpRight,
   FolderKanban,
+  Images,
   LayoutDashboard,
   LogOut,
 } from "lucide-react";
@@ -22,6 +23,12 @@ const navigation = [
     label: "Projects",
     href: "/admin/projects",
     icon: FolderKanban,
+    exact: false,
+  },
+  {
+    label: "Playground",
+    href: "/admin/playground",
+    icon: Images,
     exact: false,
   },
 ];

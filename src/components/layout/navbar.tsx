@@ -21,10 +21,6 @@ export function Navbar() {
   const lastScrollY = useRef(0);
   const { scrollY } = useScroll();
 
-  // =========================
-  // NAVBAR SCROLL BEHAVIOR
-  // =========================
-
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = lastScrollY.current;
 
@@ -46,10 +42,6 @@ export function Navbar() {
 
     lastScrollY.current = latest;
   });
-
-  // =========================
-  // ACTIVE SECTION
-  // =========================
 
   useEffect(() => {
     const handleActiveSection = () => {
@@ -89,8 +81,6 @@ export function Navbar() {
 
   return (
     <>
-      {/* ================= NAVBAR ================= */}
-
       <motion.header
         initial={{ y: 0 }}
         animate={{
@@ -124,8 +114,6 @@ export function Navbar() {
             ${isScrolled ? "h-16 md:h-18" : "h-20 md:h-24"}
           `}
         >
-          {/* Logo */}
-
           <a
             href="#home"
             className="relative z-50 flex items-center"
@@ -136,15 +124,13 @@ export function Navbar() {
               src="/images/logo/logo.png"
               alt="S4Z"
               className={`
-                w-auto object-contain
+                w-auto object-contain text-bold
                 transition-[height] duration-500
 
                 ${isScrolled ? "h-7" : "h-7 md:h-8"}
               `}
             />
           </a>
-
-          {/* ================= DESKTOP NAV ================= */}
 
           <nav className="hidden items-center gap-7 md:flex lg:gap-8">
             {navigation.map((item) => {
@@ -166,8 +152,6 @@ export function Navbar() {
                 >
                   {item.label}
 
-                  {/* Active dot */}
-
                   <span
                     className={`
                       absolute
@@ -187,8 +171,6 @@ export function Navbar() {
               );
             })}
           </nav>
-
-          {/* ================= MOBILE BUTTON ================= */}
 
           <button
             type="button"
@@ -214,8 +196,6 @@ export function Navbar() {
           </button>
         </div>
       </motion.header>
-
-      {/* ================= MOBILE MENU ================= */}
 
       <div
         className={`
@@ -247,8 +227,6 @@ export function Navbar() {
                     py-5
                   "
                 >
-                  {/* Number */}
-
                   <span
                     className={`
                       mr-5
@@ -261,8 +239,6 @@ export function Navbar() {
                   >
                     0{index + 1}
                   </span>
-
-                  {/* Label */}
 
                   <span
                     className={`
@@ -278,8 +254,6 @@ export function Navbar() {
                   >
                     {item.label}
                   </span>
-
-                  {/* Active indicator */}
 
                   <span
                     className={`
@@ -298,8 +272,6 @@ export function Navbar() {
               );
             })}
           </nav>
-
-          {/* ================= MOBILE FOOTER ================= */}
 
           <div className="mt-auto flex items-end justify-between pt-10">
             <p className="text-[10px] uppercase tracking-[0.15em] text-white/30">

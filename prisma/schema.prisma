@@ -73,3 +73,46 @@ model ProjectImage {
 
   @@index([projectId])
 }
+
+model Playground {
+  id String @id @default(cuid())
+
+  number   String
+  title    String
+  category String
+  image    String
+  year     String
+
+  order     Int     @default(0)
+  published Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published])
+  @@index([order])
+}
+
+model SiteHero {
+  id String @id @default("hero")
+
+  eyebrow String
+
+  headlines Json
+
+  description String @db.Text
+
+  backgroundImage String
+
+  ctaLabel String
+  ctaUrl   String
+
+  available     Boolean @default(true)
+  availableText String
+
+  scrollLabel String
+  scrollUrl   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

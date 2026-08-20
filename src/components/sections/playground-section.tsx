@@ -1,13 +1,16 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { playgroundItems } from "@/src/data/playground";
+import { getPlaygroundPreview } from "@/src/lib/queries/playground";
 
 import { FadeUp } from "@/src/components/motion/fade-up";
 import { RevealText } from "@/src/components/motion/reveal-text";
 import { RevealImage } from "@/src/components/motion/reveal-image";
 
-export function PlaygroundSection() {
+export async function PlaygroundSection() {
+  const playgroundItems = await getPlaygroundPreview();
+
   return (
     <section
       id="playground"
@@ -129,6 +132,8 @@ export function PlaygroundSection() {
                       ${currentLayout.aspect}
                     `}
                   >
+                    {/* IMAGE */}
+
                     <Image
                       src={item.image}
                       alt={item.title}
@@ -149,6 +154,8 @@ export function PlaygroundSection() {
                       "
                     />
 
+                    {/* OVERLAY */}
+
                     <div
                       className="
                         absolute inset-0
@@ -161,6 +168,8 @@ export function PlaygroundSection() {
                       "
                     />
 
+                    {/* NUMBER */}
+
                     <span
                       className="
                         absolute left-4 top-4
@@ -171,8 +180,10 @@ export function PlaygroundSection() {
                         sm:text-[10px]
                       "
                     >
-                      {item.id}
+                      {item.number}
                     </span>
+
+                    {/* ARROW */}
 
                     <div
                       className="
@@ -198,6 +209,8 @@ export function PlaygroundSection() {
                     >
                       <ArrowUpRight size={16} strokeWidth={1.5} />
                     </div>
+
+                    {/* CONTENT */}
 
                     <div
                       className="
@@ -250,6 +263,63 @@ export function PlaygroundSection() {
             );
           })}
         </div>
+
+        {/* ================= VIEW ALL ================= */}
+
+        {playgroundItems.length > 0 && (
+          <div
+            className="
+              mt-10
+              flex
+              justify-start
+              sm:mt-12
+              md:mt-16
+              md:justify-end
+            "
+          >
+            <FadeUp>
+              <Link
+                href="/playground"
+                className="
+                  group
+                  inline-flex
+                  items-center
+                  gap-7
+
+                  px-5
+                  py-3
+
+                  text-sm
+                  text-white/70
+
+                  transition-all
+                  duration-300
+
+                  active:scale-[0.98]
+
+                  md:gap-8
+                  md:px-6
+                  md:py-3.5
+                "
+              >
+                View All Playground
+                <ArrowUpRight
+                  size={16}
+                  strokeWidth={1.5}
+                  className="
+                    transition-transform
+                    duration-300
+
+                    group-hover:-translate-y-1
+                    group-hover:translate-x-1
+                  "
+                />
+              </Link>
+            </FadeUp>
+          </div>
+        )}
+
+        {/* ================= FOOTER ================= */}
 
         <div
           className="

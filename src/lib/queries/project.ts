@@ -130,3 +130,28 @@ export async function getPublishedProjectCount() {
     },
   });
 }
+
+export async function getPublishedProjects() {
+  return prisma.project.findMany({
+    where: {
+      published: true,
+    },
+
+    orderBy: {
+      order: "asc",
+    },
+
+    select: {
+      id: true,
+      number: true,
+      title: true,
+      slug: true,
+      category: true,
+      description: true,
+      coverImage: true,
+      role: true,
+      year: true,
+      order: true,
+    },
+  });
+}

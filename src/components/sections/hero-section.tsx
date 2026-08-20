@@ -4,9 +4,21 @@ import Image from "next/image";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 
+import type { SiteHeroSchema } from "@/src/schemas/hero.schema";
+
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export function HeroSection() {
+type HeroSectionProps = {
+  hero: SiteHeroSchema;
+};
+
+const headlineStyles = {
+  primary: "text-white",
+  muted: "text-white/40",
+  accent: "text-[#7D8BFF]",
+} as const;
+
+export function HeroSection({ hero }: HeroSectionProps) {
   return (
     <section
       id="home"
@@ -28,7 +40,7 @@ export function HeroSection() {
         }}
       >
         <Image
-          src="/images/hero/hero-photo.jpeg"
+          src={hero.backgroundImage}
           alt="Sareh Azis Panegar"
           fill
           priority
@@ -94,7 +106,7 @@ export function HeroSection() {
                 md:mb-5 md:text-sm
               "
             >
-              - UI/UX Designer
+              {hero.eyebrow}
             </motion.p>
 
             <h1
@@ -108,62 +120,32 @@ export function HeroSection() {
                 md:text-[clamp(4.5rem,7vw,7rem)]
               "
             >
-              <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span
-                  className="block text-white"
-                  initial={{
-                    y: "110%",
-                  }}
-                  animate={{
-                    y: "0%",
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.22,
-                    ease,
-                  }}
+              {hero.headlines.map((headline, index) => (
+                <span
+                  key={`${headline.text}-${index}`}
+                  className={`
+                    block overflow-hidden pb-[0.08em]
+                    ${index === 1 ? "mt-2" : ""}
+                  `}
                 >
-                  I make interfaces
-                </motion.span>
-              </span>
-
-              <span className="mt-2 block overflow-hidden pb-[0.08em]">
-                <motion.span
-                  className="block text-white/40"
-                  initial={{
-                    y: "110%",
-                  }}
-                  animate={{
-                    y: "0%",
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.3,
-                    ease,
-                  }}
-                >
-                  look good
-                </motion.span>
-              </span>
-
-              <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span
-                  className="block text-white/40"
-                  initial={{
-                    y: "110%",
-                  }}
-                  animate={{
-                    y: "0%",
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.38,
-                    ease,
-                  }}
-                >
-                  and make sense.
-                </motion.span>
-              </span>
+                  <motion.span
+                    className={`block ${headlineStyles[headline.style]}`}
+                    initial={{
+                      y: "110%",
+                    }}
+                    animate={{
+                      y: "0%",
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.22 + index * 0.08,
+                      ease,
+                    }}
+                  >
+                    {headline.text}
+                  </motion.span>
+                </span>
+              ))}
             </h1>
 
             <motion.p
@@ -188,9 +170,7 @@ export function HeroSection() {
                 md:text-base md:leading-7
               "
             >
-              I&apos;m a UI/UX Designer based in Indonesia. I turn ideas and
-              messy problems into interfaces that feel clear, simple, and easy
-              to use.
+              {hero.description}
             </motion.p>
 
             <motion.div
@@ -209,26 +189,27 @@ export function HeroSection() {
               }}
             >
               <a
-                href="#work"
+                href={hero.ctaUrl}
                 className="
-    group mt-7 inline-flex
-    items-center gap-7
-    border border-white/25
-    px-5 py-3
-    text-sm text-white
-    transition-all duration-300
+                  group mt-7 inline-flex
+                  items-center gap-7
+                  border border-white/25
+                  px-5 py-3
+                  text-sm text-white
+                  transition-all duration-300
 
-    hover:border-[#2563EB]
-    hover:bg-[#2563EB]
+                  hover:border-[#2563EB]
+                  hover:bg-[#2563EB]
 
-    active:scale-[0.98]
+                  active:scale-[0.98]
 
-    md:mt-8
-    md:gap-8
-    md:px-6 md:py-3.5
-  "
+                  md:mt-8
+                  md:gap-8
+                  md:px-6 md:py-3.5
+                "
               >
-                View My Work
+                {hero.ctaLabel}
+
                 <ArrowUpRight
                   size={16}
                   className="
@@ -263,20 +244,24 @@ export function HeroSection() {
             md:pt-5
           "
         >
-          <div className="flex items-center gap-3">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-50" />
+          {hero.available ? (
+            <div className="flex items-center gap-3">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-50" />
 
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
-            </span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+              </span>
 
-            <span className="text-[9px] uppercase tracking-[0.15em] text-white/50 sm:text-[10px] md:text-xs">
-              Available for work
-            </span>
-          </div>
+              <span className="text-[9px] uppercase tracking-[0.15em] text-white/50 sm:text-[10px] md:text-xs">
+                {hero.availableText}
+              </span>
+            </div>
+          ) : (
+            <div />
+          )}
 
           <a
-            href="#work"
+            href={hero.scrollUrl}
             className="
               group hidden items-center gap-3
               text-[10px] uppercase
@@ -287,7 +272,8 @@ export function HeroSection() {
               sm:flex
             "
           >
-            Scroll to explore
+            {hero.scrollLabel}
+
             <ArrowDown
               size={14}
               className="
