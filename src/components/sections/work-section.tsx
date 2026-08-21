@@ -72,7 +72,7 @@ export function WorkSection({ projects }: WorkSectionProps) {
                 lg:text-8xl
               "
             >
-              <RevealText delay={0.05}>A few things</RevealText>
+              <RevealText delay={0.05}>Some things</RevealText>
 
               <RevealText delay={0.12}>I&apos;ve worked on.</RevealText>
             </h2>
@@ -88,8 +88,8 @@ export function WorkSection({ projects }: WorkSectionProps) {
                   md:ml-auto
                 "
               >
-                A mix of projects where I explored problems, tested ideas, and
-                turned them into interfaces people can actually use.
+                A few projects I had fun working on — figuring things out,
+                trying ideas, and making them work better.
               </p>
             </FadeUp>
           </div>

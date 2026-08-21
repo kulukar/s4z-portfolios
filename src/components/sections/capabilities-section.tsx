@@ -26,13 +26,13 @@ const capabilities = [
     title: "UX & Product Thinking",
     short: "Figuring out what needs to work before making it look good.",
     description:
-      "Before jumping into screens, I like understanding the problem, the people using the product, and what actually needs to be solved.",
+      "Before jumping into screens, I like understanding the problem, who I'm designing for, and what actually needs to be solved.",
     services: [
       "User Research",
       "User Journey",
       "Information Architecture",
       "Problem Mapping",
-      "UX Analysis",
+      "User Flows",
     ],
   },
   {
@@ -40,7 +40,7 @@ const capabilities = [
     title: "Design Systems",
     short: "Keeping things consistent when the product starts growing.",
     description:
-      "I build reusable components and simple design rules so interfaces stay consistent without making every new screen from scratch.",
+      "I like building reusable components and simple design rules that keep things consistent without having to reinvent every screen.",
     services: [
       "Components",
       "Design Tokens",
@@ -52,9 +52,9 @@ const capabilities = [
   {
     id: "04",
     title: "Design to Code",
-    short: "Sometimes I take the design beyond Figma.",
+    short: "Sometimes I like taking the design beyond Figma.",
     description:
-      "I also enjoy bringing interfaces into the browser. It helps me understand how design decisions behave in a real product, not just inside a design file.",
+      "I enjoy bringing interfaces into the browser too. It helps me see how my design decisions actually behave once they're part of a real product.",
     services: [
       "React",
       "Next.js",
@@ -133,8 +133,8 @@ export function CapabilitiesSection() {
           <div className="md:col-span-4 md:pb-2">
             <FadeUp delay={0.18}>
               <p className="max-w-sm text-sm leading-6 text-white/45 md:ml-auto">
-                From figuring out the experience to polishing the interface —
-                and sometimes taking it into the browser too.
+                From figuring out how things should work to making them look and
+                feel right — and sometimes building them too.
               </p>
             </FadeUp>
           </div>

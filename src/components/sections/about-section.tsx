@@ -8,11 +8,11 @@ import { Stagger, StaggerItem } from "@/src/components/motion/stagger";
 
 const skills = [
   "UI/UX Design",
+  "User Research",
+  "Wireframing & Prototyping",
   "Interaction Design",
-  "Prototyping",
-  "Design System",
-  "Figma",
-  "Front-end",
+  "Design Systems",
+  "Front-end Development",
 ];
 
 export function AboutSection() {
@@ -79,8 +79,9 @@ export function AboutSection() {
           <div className="md:col-span-4 md:pb-2">
             <FadeUp delay={0.18}>
               <p className="max-w-sm text-sm leading-6 text-white/45 md:ml-auto">
-                Good design doesn&apos;t need to feel complicated. I like
-                figuring out what matters and making everything else easier.
+                Good design doesn&apos;t have to feel complicated. I like
+                figuring out what really matters, then making the rest feel
+                easy.
               </p>
             </FadeUp>
           </div>
@@ -189,10 +190,10 @@ export function AboutSection() {
                     lg:mt-8 lg:text-base
                   "
                 >
-                  I enjoy taking rough ideas, asking a lot of questions, and
-                  slowly turning them into interfaces that feel clear and easy
-                  to use. Sometimes that also means opening VS Code and seeing
-                  how far I can take the design myself.
+                  I like starting with rough ideas, asking way too many
+                  questions, and turning them into interfaces that feel clear
+                  and easy to use. Sometimes that means opening VS Code too,
+                  just to see how far I can take the idea myself.
                 </p>
               </FadeUp>
             </div>
