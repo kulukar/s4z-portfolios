@@ -31,6 +31,12 @@ const navigation = [
     icon: Images,
     exact: false,
   },
+  {
+    label: "Hero",
+    href: "/admin/hero",
+    icon: Images,
+    exact: false,
+  },
 ];
 
 export function AdminSidebar() {
@@ -49,7 +55,7 @@ export function AdminSidebar() {
       <div className="flex h-20 items-center border-b border-white/10 px-7">
         <Link href="/admin">
           <p className="font-display text-lg font-medium tracking-[-0.03em]">
-            s4z<span className="text-[#3B82F6]">.</span>studio
+            S4Z
           </p>
         </Link>
       </div>
