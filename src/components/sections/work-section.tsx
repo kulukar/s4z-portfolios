@@ -160,7 +160,6 @@ export function WorkSection({ projects }: WorkSectionProps) {
 
                         <div className="pointer-events-none absolute inset-0 bg-black/5" />
 
-                        {/* Mobile Arrow */}
                         <div
                           className="
                             absolute right-4 top-4
@@ -181,8 +180,6 @@ export function WorkSection({ projects }: WorkSectionProps) {
                       </div>
                     </RevealImage>
                   </div>
-
-                  {/* ================= CONTENT ================= */}
 
                   <div
                     className={`

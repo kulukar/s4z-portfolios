@@ -24,8 +24,6 @@ export async function PlaygroundSection() {
       "
     >
       <div className="mx-auto max-w-360">
-        {/* ================= HEADER ================= */}
-
         <div
           className="
             grid gap-7
@@ -81,8 +79,6 @@ export async function PlaygroundSection() {
           </div>
         </div>
 
-        {/* ================= PLAYGROUND GRID ================= */}
-
         <div
           className="
             grid grid-cols-1
@@ -132,8 +128,6 @@ export async function PlaygroundSection() {
                       ${currentLayout.aspect}
                     `}
                   >
-                    {/* IMAGE */}
-
                     <Image
                       src={item.image}
                       alt={item.title}
@@ -154,8 +148,6 @@ export async function PlaygroundSection() {
                       "
                     />
 
-                    {/* OVERLAY */}
-
                     <div
                       className="
                         absolute inset-0
@@ -167,8 +159,6 @@ export async function PlaygroundSection() {
                         md:from-black/80
                       "
                     />
-
-                    {/* NUMBER */}
 
                     <span
                       className="
@@ -182,8 +172,6 @@ export async function PlaygroundSection() {
                     >
                       {item.number}
                     </span>
-
-                    {/* ARROW */}
 
                     <div
                       className="
@@ -209,8 +197,6 @@ export async function PlaygroundSection() {
                     >
                       <ArrowUpRight size={16} strokeWidth={1.5} />
                     </div>
-
-                    {/* CONTENT */}
 
                     <div
                       className="
@@ -264,8 +250,6 @@ export async function PlaygroundSection() {
           })}
         </div>
 
-        {/* ================= VIEW ALL ================= */}
-
         {playgroundItems.length > 0 && (
           <div
             className="
@@ -318,8 +302,6 @@ export async function PlaygroundSection() {
             </FadeUp>
           </div>
         )}
-
-        {/* ================= FOOTER ================= */}
 
         <div
           className="

@@ -85,8 +85,6 @@ export function CapabilitiesSection() {
       "
     >
       <div className="mx-auto max-w-360">
-        {/* ================= HEADER ================= */}
-
         <div
           className="
             grid gap-7
@@ -142,7 +140,7 @@ export function CapabilitiesSection() {
           </div>
         </div>
 
-        {/* ================= CAPABILITIES ================= */}
+        {/* ================= CAPABILITIE ================= */}
 
         <div>
           {capabilities.map((capability, index) => {
@@ -165,8 +163,6 @@ export function CapabilitiesSection() {
                       lg:py-12
                     "
                   >
-                    {/* ================= ROW ================= */}
-
                     <div
                       className="
                         grid items-start
@@ -175,8 +171,6 @@ export function CapabilitiesSection() {
                         lg:gap-x-8
                       "
                     >
-                      {/* Number */}
-
                       <div className="md:col-span-1">
                         <span
                           className={`
@@ -193,8 +187,6 @@ export function CapabilitiesSection() {
                           {capability.id}
                         </span>
                       </div>
-
-                      {/* Title */}
 
                       <div className="pr-12 md:col-span-6 md:pr-0">
                         <h3
@@ -220,8 +212,6 @@ export function CapabilitiesSection() {
                         </h3>
                       </div>
 
-                      {/* Short Description */}
-
                       <div className="hidden md:col-span-4 md:block">
                         <p
                           className={`
@@ -238,8 +228,6 @@ export function CapabilitiesSection() {
                           {capability.short}
                         </p>
                       </div>
-
-                      {/* Arrow */}
 
                       <div
                         className="
@@ -258,7 +246,7 @@ export function CapabilitiesSection() {
                           <ArrowDownRight
                             size={20}
                             strokeWidth={1.5}
-                            className="text-[#3B82F6] md:h-5.5 md:w-[22px]"
+                            className="text-[#3B82F6] md:h-5.5 md:w-5.5"
                           />
                         ) : (
                           <ArrowUpRight
@@ -270,14 +258,12 @@ export function CapabilitiesSection() {
                               group-hover:-translate-y-1
                               group-hover:translate-x-1
                               group-hover:text-[#3B82F6]
-                              md:h-[22px] md:w-5.5
+                              md:h-5.5 md:w-5.5
                             "
                           />
                         )}
                       </div>
                     </div>
-
-                    {/* Mobile Description */}
 
                     <p
                       className={`
@@ -291,8 +277,6 @@ export function CapabilitiesSection() {
                     >
                       {capability.short}
                     </p>
-
-                    {/* ================= ACCORDION CONTENT ================= */}
 
                     <div
                       className={`
@@ -319,8 +303,6 @@ export function CapabilitiesSection() {
                         >
                           <div className="hidden md:block md:col-span-1" />
 
-                          {/* Description */}
-
                           <div className="md:col-span-6">
                             <p
                               className="
@@ -335,8 +317,6 @@ export function CapabilitiesSection() {
                               {capability.description}
                             </p>
                           </div>
-
-                          {/* Services */}
 
                           <div className="md:col-span-5">
                             <div className="flex flex-wrap gap-2 md:justify-end">
@@ -367,8 +347,6 @@ export function CapabilitiesSection() {
             );
           })}
         </div>
-
-        {/* ================= BOTTOM TEXT ================= */}
 
         <div className="flex pt-7 sm:justify-end md:pt-10">
           <FadeUp delay={0.1}>

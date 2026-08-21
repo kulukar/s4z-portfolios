@@ -7,15 +7,15 @@ import { RevealText } from "@/src/components/motion/reveal-text";
 const socials = [
   {
     label: "LinkedIn",
-    href: "#",
+    href: "https://www.linkedin.com/in/sareh-azis-panegar/",
   },
   {
     label: "Behance",
-    href: "#",
+    href: "https://www.behance.net/sarehazispanegar",
   },
   {
     label: "Dribbble",
-    href: "#",
+    href: "https://dribbble.com/sarehazispanegar",
   },
 ];
 
@@ -34,8 +34,6 @@ export function ContactSection() {
       "
     >
       <div className="mx-auto max-w-360">
-        {/* ================= CONTACT ================= */}
-
         <div
           className="
             relative
@@ -45,8 +43,6 @@ export function ContactSection() {
             lg:min-h-[82vh]
           "
         >
-          {/* Eyebrow */}
-
           <FadeUp>
             <div className="flex items-center gap-3 sm:gap-4">
               <span className="h-px w-6 bg-[#3B82F6] sm:w-8" />
@@ -64,8 +60,6 @@ export function ContactSection() {
               </p>
             </div>
           </FadeUp>
-
-          {/* ================= HEADLINE ================= */}
 
           <div className="mt-8 sm:mt-10 md:mt-12">
             <h2
@@ -92,8 +86,6 @@ export function ContactSection() {
             </h2>
           </div>
 
-          {/* ================= CONTACT AREA ================= */}
-
           <div
             className="
               mt-12
@@ -102,8 +94,6 @@ export function ContactSection() {
               md:mt-20 md:grid-cols-12 md:items-end
             "
           >
-            {/* Description */}
-
             <div className="md:col-span-5">
               <FadeUp delay={0.2}>
                 <p
@@ -120,11 +110,9 @@ export function ContactSection() {
                 </p>
               </FadeUp>
 
-              {/* Email Button */}
-
               <FadeUp delay={0.26}>
                 <a
-                  href="mailto:EMAIL_KAMU"
+                  href="mailto:sarehazispanegar@gmail.com"
                   className="
                     group mt-7
                     inline-flex items-center
@@ -163,12 +151,10 @@ export function ContactSection() {
               </FadeUp>
             </div>
 
-            {/* ================= BIG ARROW ================= */}
-
             <div className="hidden md:col-span-7 md:flex md:justify-end">
               <FadeUp delay={0.28}>
                 <a
-                  href="mailto:EMAIL_KAMU"
+                  href="mailto:sarehazispanegar@gmail.com"
                   aria-label="Send me an email"
                   className="
                     group
@@ -205,8 +191,6 @@ export function ContactSection() {
           </div>
         </div>
 
-        {/* ================= FOOTER ================= */}
-
         <footer className="border-t border-white/15">
           <FadeUp>
             <div
@@ -218,8 +202,6 @@ export function ContactSection() {
                 md:gap-10 md:py-10
               "
             >
-              {/* Brand */}
-
               <div className="sm:col-span-1 md:col-span-4">
                 <Link
                   href="/"
@@ -236,8 +218,6 @@ export function ContactSection() {
                   UI/UX Designer · Indonesia
                 </p>
               </div>
-
-              {/* Socials */}
 
               <div
                 className="

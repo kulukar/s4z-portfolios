@@ -29,8 +29,6 @@ export function AboutSection() {
       "
     >
       <div className="mx-auto max-w-360">
-        {/* ================= HEADER ================= */}
-
         <div
           className="
             grid gap-7
@@ -88,8 +86,6 @@ export function AboutSection() {
           </div>
         </div>
 
-        {/* ================= ABOUT CONTENT ================= */}
-
         <div
           className="
             grid gap-10
@@ -99,8 +95,6 @@ export function AboutSection() {
             lg:gap-16 lg:pt-24
           "
         >
-          {/* ================= IMAGE ================= */}
-
           <div className="md:col-span-5">
             <RevealImage>
               <div
@@ -153,8 +147,6 @@ export function AboutSection() {
             </RevealImage>
           </div>
 
-          {/* ================= TEXT ================= */}
-
           <div
             className="
               flex flex-col
@@ -204,8 +196,6 @@ export function AboutSection() {
                 </p>
               </FadeUp>
             </div>
-
-            {/* ================= SKILLS ================= */}
 
             <div className="mt-12 border-t border-white/10 md:mt-14 lg:mt-auto">
               <FadeUp>
